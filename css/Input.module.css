@@ -1,0 +1,89 @@
+.boxGroupInput {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.formGroup {
+    border-radius: 5px;
+    position: relative;
+}
+
+.messageError {
+    color: var(--red-color-mess-err);
+    margin: 10px 0;
+}
+
+.messageError p{
+    font-family: var(--quick-sand-font-family);
+    font-size: 13px;
+}
+
+.errMsg {
+    border: 1px solid var(--red-color-mess-err);
+    position: relative;
+    /* animation: shake 0.9s ease 1; */
+}
+
+.focus {
+    border: 1px solid var(--color-hover);
+}
+
+.ic_icon {
+    position: absolute;
+    right: 5px;
+    top: 13px;
+    color: var(--black-color);
+    max-width: 20px;
+    height: 20px;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+.form_control{
+    width: 100%;
+    background: var(--color-input);
+    height: 40px;
+    height: 40px;
+    padding: 10px 15px;
+    color: var(--black-color);
+    border-radius: 5px;
+    border: none;
+    font-family: var(--quick-sand-font-family);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.form_control::placeholder{
+    color: var(--gray-color-3);
+}
+.form_control:focus-visible{
+    border: none;
+    outline: none;
+}
+
+.label {
+    font-size: var(--font-size-default);
+    margin-bottom: 5px;
+    font-family: var(--quick-sand-font-family);
+    font-weight: 500;
+    display: block;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-10px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(10px);
+    }
+}

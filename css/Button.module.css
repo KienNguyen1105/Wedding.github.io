@@ -1,0 +1,107 @@
+.container {
+  border-radius: 5px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.defaultButton {
+  background: var(--white-color);
+  border: 1px solid var(--gray-color-2);
+}
+.pinkButton {
+  background: var(--pink-color-1);
+}
+
+.whiteButton {
+  border: 1px solid var(--white-color);
+  background: transparent;
+}
+
+.darkmodeButton {
+  border: 1px solid var(--gray-Dark-Dark-Mode-50);
+  background: var(--gray-Dark-Dark-Mode-50);
+}
+
+.blueButton {
+  border: 1px solid var(--primary-Blue-color-400);
+  background: var(--primary-Blue-color-400);
+}
+
+.grayButton {
+  background: var(--gray-color-2);
+}
+.pink {
+  color: var(--color-hover);
+}
+.white {
+  color: var(--white-color);
+}
+
+.black {
+  color: var(--black-color);
+}
+
+.light_gray {
+  color: var();
+}
+
+.text {
+  font-family: var(--quick-sand-font-family);
+  text-align: center;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  font-weight: 500;
+}
+
+.padding {
+  padding-left: 5px;
+}
+
+.buttonHover {
+  overflow: hidden;
+  position: relative;
+}
+
+.buttonHover:hover {
+  box-shadow: 0 0 10px 0 var(--color-hover);
+  background: var(--white-color);
+  color: var(--black-color);
+}
+
+.buttonHover:hover svg {
+  color: var(--red-color-1) !important;
+}
+
+.buttonHover:hover span {
+  color: var(--red-color-1);
+}
+.borderPink {
+  border: 1px solid var(--color-hover);
+}
+.textPink {
+  color: var(--pink-color-1);
+}
+.orangeButton {
+  background: var(--orange-color);
+}
+.orangeButton span,
+.lightBlueButton span {
+  color: white;
+}
+.lightBlueButton {
+  background: var(--letter-main-color);
+}
+.borderLightBlueButton {
+  border: 1px solid var(--letter-main-color);
+}
+.borderLightBlueButton span {
+  color: var(--letter-main-color);
+}
+.borderFull {
+  border-radius: 32px;
+}
+.autocenter {
+  margin: 15px auto;
+}
