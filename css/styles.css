@@ -768,3 +768,23 @@ ul {
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
+
+.gallery-image {
+  align-items: center;
+  display: flex;
+  height: 500px;
+  justify-content: center;
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel .slider-wrapper {
+  padding-bottom: 20px;
+}
+
+.gallery-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}

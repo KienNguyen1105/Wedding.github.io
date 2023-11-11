@@ -32221,6 +32221,27 @@ ul {
   transform: translateX(0);
 }
 
+.gallery-image {
+  align-items: center;
+  display: flex;
+  height: 500px;
+  justify-content: center;
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel .slider-wrapper {
+  padding-bottom: 20px;
+}
+
+.gallery-image img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .max-md\:container {
     width: 100%;
