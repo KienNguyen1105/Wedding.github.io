@@ -32229,8 +32229,6 @@ ul {
   margin: auto !important;
   overflow: hidden;
   width: 100%;
-  background-color: transparent !important;
-  padding: 0px !important;
 }
 
 .carousel .slider-wrapper {
@@ -32343,9 +32341,6 @@ img:nth-child(10) {
 
 #sync1 {
   .item {
-    background: #0c83e7;
-    padding: 80px 0px;
-    margin: 5px;
     color: #FFF;
     border-radius: 3px;
     text-align: center;
