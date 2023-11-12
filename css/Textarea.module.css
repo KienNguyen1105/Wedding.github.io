@@ -1,6 +1,6 @@
 .boxGroupInput {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .formGroup {
@@ -13,44 +13,37 @@
     margin: 10px 0;
 }
 
-.messageError p{
-    font-family: var(--quick-sand-font-family);
-    font-size: 13px;
-}
-
 .errMsg {
     border: 1px solid var(--red-color-mess-err);
     position: relative;
-    /* animation: shake 0.9s ease 1; */
+    animation: shake 0.9s ease 1;
 }
 
-.focus {
-    border: 1px solid var(--color-hover);
+.messageError p{
+    font-family: var(--quick-sand-font-family);
+    font-size: 13px;
 }
 
 .ic_icon {
     position: absolute;
     right: 5px;
     top: 13px;
-    color: var(--black-color);
+    color: var(--gray-color);
     max-width: 20px;
     height: 20px;
     width: 100%;
     object-fit: contain;
     object-position: center;
 }
-.Iform_control{
+.form_control{
     width: 100%;
     background: var(--color-input);
-    height: 40px;
-    height: 40px;
+    min-height: 200px;
     padding: 10px 15px;
     color: var(--black-color);
     border-radius: 5px;
     border: none;
     font-family: var(--quick-sand-font-family);
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 .form_control::placeholder{
     color: var(--gray-color-3);
