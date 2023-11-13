@@ -396,4 +396,24 @@
         sync3.data('owl.carousel').to(number, 100, true);
         }
     }
+
+    function getCurrentDateTime() {
+        const now = new Date();
+      
+        // Lấy ngày, tháng, năm
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        const year = now.getFullYear();
+      
+        // Lấy giờ, phút, giây
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+        // Tạo định dạng "dd.mm.yyyy hh:mm:ss"
+        const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+      
+        return formattedDateTime;
+      }
+
 }(jQuery));

@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "D:\\Source\\KienQuynh\\KienQuynh.github.io\\index.html",
+            "url": "http://localhost:5502",
             "webRoot": "${workspaceFolder}"
         }
     ]
