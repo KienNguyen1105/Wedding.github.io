@@ -23,7 +23,8 @@
     // Create an array to store individual leaves
     const leaves = [];
     const leafImage = new Image();
-    leafImage.src = 'image/laphong.png'; 
+    // leafImage.src = 'image/laphong.png'; 
+    leafImage.src = 'image/kimtuyen.png'; 
     var isMute = false;
 
     /*================================
