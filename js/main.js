@@ -23,10 +23,10 @@
     // Create an array to store individual leaves
     const leaves = [];
     const leafImage = new Image();
-    // leafImage.src = 'image/laphong.png'; 
-    leafImage.src = 'image/kimtuyen.png'; 
+    leafImage.src = 'image/laphong.png'; 
+    // leafImage.src = 'image/kimtuyen.png'; 
     var isMute = false;
-
+    var db;
     /*================================
     Window Load
     ==================================*/
@@ -39,7 +39,33 @@
         sliderLoadedAddClass();
         preloader();
         animateLeaves();
+        initDatabase();
     })
+
+    function initDatabase() {
+        var dbRequest = indexedDB.open("MyWedding", 2);
+    
+        dbRequest.onupgradeneeded = function(event) {
+            db = event.target.result;
+    
+            // Kiểm tra và tạo cấu trúc cơ sở dữ liệu nếu cần
+            if (!db.objectStoreNames.contains("Wedding")) {
+                var objectStore = db.createObjectStore("Wedding", { keyPath: "id", autoIncrement: true });
+    
+                objectStore.createIndex("userNameIndex", "userName", { unique: false });
+                objectStore.createIndex("dateIndex", "date", { unique: false });
+            }
+        };
+    
+        dbRequest.onsuccess = function(event) {
+            db = event.target.result;
+            readData();
+        };
+    
+        dbRequest.onerror = function(event) {
+            console.error("Error opening database:", event.target.error);
+        };
+    }
 
     const cardElement = document.getElementById('cardElement');
     if (cardElement) {
@@ -58,6 +84,14 @@
             const loichuc = document.getElementById('loichuc');
             loichuc.classList.remove('deactive');
             loichuc.classList.add('active');
+        });
+    }
+
+    const btnSendMsg = document.getElementById('btnSendMsg');
+    if (btnSendMsg) {
+        btnSendMsg.addEventListener('mouseup', function () {
+            writeData();
+            readData();
         });
     }
 
@@ -398,6 +432,48 @@
         }
     }
 
+    function writeData() {
+        const userName = document.getElementById('userName').value;
+        const contentMsg = document.getElementById('contentMsg').value;
+
+        // Mở một giao dịch để ghi dữ liệu
+        var transaction = db.transaction(["MyObjectStore"], "readwrite");
+        // Lấy kho dữ liệu (object store) trong giao dịch
+        var objectStore = transaction.objectStore("MyObjectStore");
+        // Dữ liệu cần ghi
+        var newData = {
+            userName: userName,
+            content: contentMsg,
+            date: getCurrentDateTime()
+        };
+        // Thêm dữ liệu mới vào kho dữ liệu
+        var addRequest = objectStore.add(newData);
+        addRequest.onsuccess = function(event) {
+            readData();
+        };
+    }
+
+    function readData() {
+        // Mở một giao dịch để đọc dữ liệu
+        var transaction = db.transaction(["MyObjectStore"], "readonly");
+        // Lấy kho dữ liệu (object store) trong giao dịch
+        var objectStore = transaction.objectStore("MyObjectStore");
+        // Mở một cursor để duyệt qua từng mục trong kho dữ liệu
+        var cursorRequest = objectStore.openCursor();
+        var dataList = [];
+        
+        cursorRequest.onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                dataList.push(cursor.value);
+                cursor.continue();
+            } 
+            else {
+                displayData(dataList);
+            }
+        };
+    }
+    
     function getCurrentDateTime() {
         const now = new Date();
       
@@ -415,6 +491,47 @@
         const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
       
         return formattedDateTime;
-      }
+    }
+
+    function displayData(dataList){
+        // var container = document.getElementById("loichucaaaaa");
+        // var htmlString = '<div id="sync3" class="owl-carousel owl-theme">';
+        // var htmlString2 = ' <div id="sync4" style="display: none;" class="owl-carousel owl-theme">';
+        // dataList.forEach(function(data) {
+        //     htmlString += `
+        //         <div class="slide">
+        //             <div class="max-width-448 padding-16 relative" style="width: 100%;">
+        //                 <div class="padding-16"
+        //                     style="background: rgba(238, 241, 239, 0.5); width: 100%; border-radius: 8px;">
+        //                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAWCAYAAABnnAr9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUvSURBVHgB7VhfTxxVFD/n7syy5U+plcaCGqIx7QfYDyAfoG20lFqalJKQwEsFDBge4cUHkm4r1BdoiArabRTUuDz50v0C+N6NDyUmVNtGilthYXfu8ZyZWXdmugssu5m++Evu3tn7b87v3PPn3kFg3EkudFiG2SvPxxTeG+q+9nh2eamXFAxCgZIjl/vmoY6Y+fHbOFpWh1LRhzcuXskE+0DrQSCKI+nkcE9/AuqM/fiihvnhS9eSwTloC7e8mOKq3W5A2FBI45bGe6VBmCg3+SgC6mh0UpRQbFOIqe3ne7cmBgayt7//skth5KZvktZDI5f716COCPIFgrsEMOn0YjaidOLGxeur3jnK7WwuNhBBh0V41zuIgMbuMAmoEdowBr1KstuIzsdaTVs5rKSx4ByMqMm5laV2qCv8fFlJn5b6qIWNZOqL+1+f8c5QYnLc+SKwUGdw6YIyHkLN8mG8Qk+cd3kQ3F32QojkiFIz39n9NcN9TxABvpjNmyrrbVGWU/sFRDDdogixhV0vpwimZpaX5oKargpi5pX7Pob9EMFzUAcQQotYja9RYYP8Cl8WpBVQPxO+syvf3CzyVZ/YsUc7wRqxUQYSkcHm+AbX7yL/sOvFePG4FMtUvVAlphcWWqSwHNnKo/AE/BcKyqIucWq0uy9h8xWllPgiK/A01538lGdtviNciXRXka8tGEJECOzyQJNbZHIDaGhGRGn3uyVBl5CGKnCsNXqO49ADeXHFQY7grZW6NUAdM68SHjvs1zHhyx7TyC84jqiySLDtG8p8pTI+X1kcYwX1OrLCFkfXLRb4PVT0J5vS6zx5jxfc9MzMNDUZ4qrZw4q1Y+ytNuTNq5xhDgjKxJsEpXeJ8ggbCfSjCKgxdn17gxS7cJQVJ2kdqoTwZfJFr/iL+YonHed3yVqnueTAZxyUuc3JxMDSJAfir1qLlJvoTGDTtBdJ7/6dn5c0DlVi4oOB7HRyYajBMOcqKovYogHa7POKuATCSW5r4njxhP2izWuNzC3Og0Vp41AFpn9i9y8E+NruRzu2kRBtswu+xvWvqCmdy1rJIl/lKsE/F3DdfWR/pWdcp0d7+hJHUVIRE70DG7uF/BAfB1bdlyg7TSO22cU2FIiwoG+z4J2kdYzfvc4WtVluPY3UAVVCNuxlvqSh1JZnw3mCGtN8dvMZhRLhoSg8B0xtFST75L1LocL3oQ4QZSnDkMMexwE8xUK+yeVUqXBUBGRLwedc/waOG5QF67m92lgpsPmWEsMaW+tnEOBbLsNisEHMM1aI/uym0A1N1q0IGu21nsyF1LET5iS5wbEItqCY8wCS9U7aQqE041NyrLky+LpR6/XK4Ws+cP/afHkTmkd7/CdzLDc58cP9M6beO7uzlU/X4m5eeK8NZYF4lrUlWVjOWq5b4R/+ROIHH1syo5euX4UacRi+CCFgdnnxfOkuVU4KO6B2isuxYh6zVDG2pre4XeLWugR6z+g1tra0UnqN72MZCAkGhACS+x3uuyeu+7muRpCTGMVuyqdkO7s94rLB66SCLhEWQlHUIWByeQrBJGKnbJAvCFP1/oJQLRSEAYNS+/Yj/c4KqRy4larLhbgWhKKokQ/713L5/AX2vrS/B7No6QRY9MsBS8SPchSoJ8KxKHDOUMPdfeOc95Mcr1LyMTC3tXdh+KP+JMfsAz/huNemV4bQY5Rze/eDIlYGrJf2bCNSoPF/qPDCVGZ85Ep4Ga4cQjkeHAYzy19xHJJYhHzNoNWj3iv/xyvGv6+gVHgz8sDVAAAAAElFTkSuQmCC"
+        //                         alt="" class="w-4" style="width: 90px; margin: auto;">
+        //                     <p class="text-text text-14 padding-16 line-height-28">${data.content}</p>
+        //                     <div>
+        //                         <h2 class="text-16  line-height-24 font-medium">-${data.userName}-</h2>
+        //                         <p class="text-16 font-light">${data.date}</p>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     `;
+        //     htmlString2 += `
+        //         <div class="slide">
+        //             <div class="max-width-448 padding-16 relative" style="width: 100%;">
+        //                 <div class="padding-16"
+        //                     style="background: rgba(238, 241, 239, 0.5); width: 100%; border-radius: 8px;">
+        //                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAWCAYAAABnnAr9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUvSURBVHgB7VhfTxxVFD/n7syy5U+plcaCGqIx7QfYDyAfoG20lFqalJKQwEsFDBge4cUHkm4r1BdoiArabRTUuDz50v0C+N6NDyUmVNtGilthYXfu8ZyZWXdmugssu5m++Evu3tn7b87v3PPn3kFg3EkudFiG2SvPxxTeG+q+9nh2eamXFAxCgZIjl/vmoY6Y+fHbOFpWh1LRhzcuXskE+0DrQSCKI+nkcE9/AuqM/fiihvnhS9eSwTloC7e8mOKq3W5A2FBI45bGe6VBmCg3+SgC6mh0UpRQbFOIqe3ne7cmBgayt7//skth5KZvktZDI5f716COCPIFgrsEMOn0YjaidOLGxeur3jnK7WwuNhBBh0V41zuIgMbuMAmoEdowBr1KstuIzsdaTVs5rKSx4ByMqMm5laV2qCv8fFlJn5b6qIWNZOqL+1+f8c5QYnLc+SKwUGdw6YIyHkLN8mG8Qk+cd3kQ3F32QojkiFIz39n9NcN9TxABvpjNmyrrbVGWU/sFRDDdogixhV0vpwimZpaX5oKargpi5pX7Pob9EMFzUAcQQotYja9RYYP8Cl8WpBVQPxO+syvf3CzyVZ/YsUc7wRqxUQYSkcHm+AbX7yL/sOvFePG4FMtUvVAlphcWWqSwHNnKo/AE/BcKyqIucWq0uy9h8xWllPgiK/A01538lGdtviNciXRXka8tGEJECOzyQJNbZHIDaGhGRGn3uyVBl5CGKnCsNXqO49ADeXHFQY7grZW6NUAdM68SHjvs1zHhyx7TyC84jqiySLDtG8p8pTI+X1kcYwX1OrLCFkfXLRb4PVT0J5vS6zx5jxfc9MzMNDUZ4qrZw4q1Y+ytNuTNq5xhDgjKxJsEpXeJ8ggbCfSjCKgxdn17gxS7cJQVJ2kdqoTwZfJFr/iL+YonHed3yVqnueTAZxyUuc3JxMDSJAfir1qLlJvoTGDTtBdJ7/6dn5c0DlVi4oOB7HRyYajBMOcqKovYogHa7POKuATCSW5r4njxhP2izWuNzC3Og0Vp41AFpn9i9y8E+NruRzu2kRBtswu+xvWvqCmdy1rJIl/lKsE/F3DdfWR/pWdcp0d7+hJHUVIRE70DG7uF/BAfB1bdlyg7TSO22cU2FIiwoG+z4J2kdYzfvc4WtVluPY3UAVVCNuxlvqSh1JZnw3mCGtN8dvMZhRLhoSg8B0xtFST75L1LocL3oQ4QZSnDkMMexwE8xUK+yeVUqXBUBGRLwedc/waOG5QF67m92lgpsPmWEsMaW+tnEOBbLsNisEHMM1aI/uym0A1N1q0IGu21nsyF1LET5iS5wbEItqCY8wCS9U7aQqE041NyrLky+LpR6/XK4Ws+cP/afHkTmkd7/CdzLDc58cP9M6beO7uzlU/X4m5eeK8NZYF4lrUlWVjOWq5b4R/+ROIHH1syo5euX4UacRi+CCFgdnnxfOkuVU4KO6B2isuxYh6zVDG2pre4XeLWugR6z+g1tra0UnqN72MZCAkGhACS+x3uuyeu+7muRpCTGMVuyqdkO7s94rLB66SCLhEWQlHUIWByeQrBJGKnbJAvCFP1/oJQLRSEAYNS+/Yj/c4KqRy4larLhbgWhKKokQ/713L5/AX2vrS/B7No6QRY9MsBS8SPchSoJ8KxKHDOUMPdfeOc95Mcr1LyMTC3tXdh+KP+JMfsAz/huNemV4bQY5Rze/eDIlYGrJf2bCNSoPF/qPDCVGZ85Ep4Ga4cQjkeHAYzy19xHJJYhHzNoNWj3iv/xyvGv6+gVHgz8sDVAAAAAElFTkSuQmCC"
+        //                         alt="" class="w-4" style="width: 90px; margin: auto;">
+        //                     <p class="text-text text-14 padding-16 line-height-28">${data.content}</p>
+        //                     <div>
+        //                         <h2 class="text-16  line-height-24 font-medium">-${data.userName}-</h2>
+        //                         <p class="text-16 font-light">${data.date}</p>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     `;
+        // });
+        // container.innerHTML = htmlString + '</div>' + htmlString2 + '/div>';
+    }
 
 }(jQuery));
