@@ -32074,7 +32074,7 @@ ul {
 }
 
 .letter-layout .modal-content {
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal-content {
@@ -32085,10 +32085,6 @@ ul {
   position: relative;
   text-align: center;
   z-index: 5;
-}
-
-.letter-layout .modal-content {
-  overflow: scroll;
 }
 
 .close-modal-icon {

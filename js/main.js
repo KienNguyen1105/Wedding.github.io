@@ -24,17 +24,7 @@
     const leaves = [];
     const leafImage = new Image();
     leafImage.src = 'image/laphong.png'; 
-
     var isMute = false;
-    var swiper = new Swiper('.swiper-container', {
-        loop: true,
-        speed: 4000,
-        autoplay: true,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        }
-    });
 
     /*================================
     Window Load
@@ -274,14 +264,17 @@
     var syncedSecondary = true;
     
     sync1.owlCarousel({
-        items : 1,
-        slideSpeed : 2000,
+        items: 1,
+        slideSpeed: 2000,
         nav: true,
         autoplay: true,
         dots: true,
         loop: true,
-        responsiveRefreshRate : 200,
-        navText: ['<svg width="100%" height="100%" viewBox="0 0 11 20"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M9.554,1.001l-8.607,8.607l8.607,8.606"/></svg>','<svg width="100%" height="100%" viewBox="0 0 11 20" version="1.1"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M1.054,18.214l8.606,-8.606l-8.606,-8.607"/></svg>'],
+        responsiveRefreshRate: 200,
+        navText: [
+            '<div class="custom-nav-btn"><svg width="100%" height="100%" viewBox="0 0 11 20"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M4.777,0.501l-4.304,4.303l4.304,4.303"/></svg></div>',
+            '<div class="custom-nav-btn"><svg width="100%" height="100%" viewBox="0 0 11 20" version="1.1"><path style="fill:none;stroke-width: 1px;stroke: #000;" d="M0.527,9.107l4.303,-4.303l-4.303,-4.304"/></svg></div>'
+        ],
     }).on('changed.owl.carousel', syncPosition);
     
     sync2
