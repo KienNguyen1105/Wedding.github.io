@@ -65,10 +65,9 @@
 
     const btnSendMsg = document.getElementById('btnSendMsg');
     if (btnSendMsg) {
-        btnSendMsg.addEventListener('mouseup', function () {
-            writeData();
-            readData();
-            writeToSheet();
+        btnSendMsg.addEventListener('mouseup', async function (event) {
+            event.preventDefault();
+           await writeData();
         });
     }
 
@@ -200,11 +199,11 @@
             $('.preloader').delay(200).fadeOut(500, function () {
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
-                handleAuthClick();
+                // handleAuthClick();
             });
             setTimeout(function() {
                 flipCard(cardElement);
-                readData();
+                // readData();
                 setTimeout(function() {
                     moveImageUp();
                 }, 500);
@@ -464,29 +463,23 @@
         }
         // Flatten to string to display
         displayData(range.values);
-      }
+    }
 
-    // function writeData() {
-    //     const userName = document.getElementById('userName').value;
-    //     const contentMsg = document.getElementById('contentMsg').value;
-
-    //     // Mở một giao dịch để ghi dữ liệu
-    //     var transaction = db.transaction(["Wedding"], "readwrite");
-    //     // Lấy kho dữ liệu (object store) trong giao dịch
-    //     var objectStore = transaction.objectStore("Wedding");
-    //     // Dữ liệu cần ghi
-    //     var newData = {
-    //         userName: userName,
-    //         content: contentMsg,
-    //         date: getCurrentDateTime()
-    //     };
-    //     // Thêm dữ liệu mới vào kho dữ liệu
-    //     var addRequest = objectStore.add(newData);
-    //     addRequest.onsuccess = function(event) {
-    //         readData();
-    //     };
-    // }
-
+    async function writeData() {
+        const userName = document.getElementById('userName').value;
+        const contentMsg = document.getElementById('contentMsg').value;
+        const newValues = [ [userName, contentMsg, getCurrentDateTime()],];
+        await gapi.client.sheets.spreadsheets.values.append({
+            spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
+            range: 'loichuc!A:C',
+            valueInputOption: 'RAW', // Hoặc 'USER_ENTERED'
+            insertDataOption: 'INSERT_ROWS', // Để chèn một hàng mới
+            resource: {
+              values: newValues,
+            },
+        });
+        readData();
+    }
     
     function getCurrentDateTime() {
         const now = new Date();

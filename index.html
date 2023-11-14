@@ -957,130 +957,131 @@
                                     <div id="sync3" class="owl-carousel owl-theme">
                                     </div>
                                     <div id="sync4" style="display: none;" class="owl-carousel owl-theme">
-                                    </div&gt;</div>
+                                        </div&gt;< /div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex justify-center items-center gap-24"
-                            style="padding-left: 20px; padding-right: 20px;">
-                            <button class="container lightBlueButton buttonHover  borderFull undefined"
-                                id="btnloichuc"><span class="text padding black">VIẾT LỜI CHÚC
-                                </span>
-                            </button>
-                            <button class="container borderLightBlueButton buttonHover  borderFull undefined"
-                                id="btnqr">
-                                <span class="text padding black">Mã QR
-                                </span>
-                            </button>
-                        </div>
-                        <div class="modal deactive margin-auto" id="loichuc">
-                            <div class="modal-container"></div>
-                            <div class="modal-block ">
-                                <div class="modal-content overflow-hidden modal-mw padding-16 border-radius-8"
-                                    style="width: 100%;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
-                                        fill="none" id="closeloichuc" class="close-modal-icon">
-                                        <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
-                                            strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
-                                            strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <h2 class="text-text text-center text-30" style="line-height: 36px;"></h2>
-                                    <div>
-                                        <h1 class="text-30">LỜI CHÚC</h1>
-                                        <form>
-                                            <div>
-                                                <div class="boxGroupInput undefined">
-                                                    <div class="formGroup ">
-                                                        <input type="text" id="userName" placeholder="Tên"
-                                                            class="Iform_control letter-input undefined">
+                            <div class="flex justify-center items-center gap-24"
+                                style="padding-left: 20px; padding-right: 20px;">
+                                <button class="container lightBlueButton buttonHover  borderFull undefined"
+                                    id="btnloichuc">
+                                    <span class="text padding black">VIẾT LỜI CHÚC</span>
+                                </button>
+                                <button class="container borderLightBlueButton buttonHover  borderFull undefined"
+                                    id="btnqr">
+                                    <span class="text padding black">Mã QR
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="modal deactive margin-auto" id="loichuc">
+                                <div class="modal-container"></div>
+                                <div class="modal-block ">
+                                    <div class="modal-content overflow-hidden modal-mw padding-16 border-radius-8"
+                                        style="width: 100%;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            viewBox="0 0 32 32" fill="none" id="closeloichuc" class="close-modal-icon">
+                                            <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
+                                                strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
+                                                strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <h2 class="text-text text-center text-30" style="line-height: 36px;"></h2>
+                                        <div>
+                                            <h1 class="text-30">LỜI CHÚC</h1>
+                                            <form>
+                                                <div>
+                                                    <div class="boxGroupInput undefined">
+                                                        <div class="formGroup ">
+                                                            <input type="text" id="userName" placeholder="Tên"
+                                                                class="Iform_control letter-input undefined">
+                                                        </div>
+                                                    </div>
+                                                    <div class="boxGroupInput undefined">
+                                                        <div class="formGroup ">
+                                                            <textarea id="contentMsg" placeholder="Nhập lời chúc"
+                                                                autocapitalize="none"
+                                                                class="form_control height-input-writeMessage "></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="boxGroupInput undefined">
-                                                    <div class="formGroup ">
-                                                        <textarea id="contentMsg"
-                                                            placeholder="Nhập lời chúc" autocapitalize="none"
-                                                            class="form_control height-input-writeMessage "></textarea>
-                                                    </div>
+                                                <div class="flex w-full justify-center">
+                                                    <button class="container pinkButton buttonHover undefined"
+                                                        id="btnSendMsg">
+                                                        <span class="text padding white">GỬI LỜI CHÚC </span>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <div class="flex w-full justify-center">
-                                                <button class="container pinkButton buttonHover undefined" id="btnSendMsg">
-                                                    <span class="text padding white">GỬI LỜI CHÚC </span>
-                                                </button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
+                                        <div class="flex justify-center items-center gapadding-16"></div>
                                     </div>
-                                    <div class="flex justify-center items-center gapadding-16"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal deactive margin-auto" id="maqr">
-                            <div class="modal-container"></div>
-                            <div class="modal-block ">
-                                <div class="modal-content overflow-hidden modal-mw padding-16 border-radius-8"
-                                    style="width: 100%;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
-                                        fill="none" id="closeqr" class="close-modal-icon">
-                                        <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
-                                            strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
-                                            strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <h2 class="text-text text-center text-30" style="line-height: 36px;"></h2>
-                                    <div>
-                                        <h1 class="text-30">Mã QR</h1>
-                                        <form>
-                                            <div class="boxGroupInput undefined">
-                                                <div class="formGroup ">
-                                                    <img src="image/QR.jpg" alt="thiepcuoi2">
+                            <div class="modal deactive margin-auto" id="maqr">
+                                <div class="modal-container"></div>
+                                <div class="modal-block ">
+                                    <div class="modal-content overflow-hidden modal-mw padding-16 border-radius-8"
+                                        style="width: 100%;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            viewBox="0 0 32 32" fill="none" id="closeqr" class="close-modal-icon">
+                                            <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
+                                                strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
+                                                strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <h2 class="text-text text-center text-30" style="line-height: 36px;"></h2>
+                                        <div>
+                                            <h1 class="text-30">Mã QR</h1>
+                                            <form>
+                                                <div class="boxGroupInput undefined">
+                                                    <div class="formGroup ">
+                                                        <img src="image/QR.jpg" alt="thiepcuoi2">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
+                                        <div class="flex justify-center items-center gapadding-16"></div>
                                     </div>
-                                    <div class="flex justify-center items-center gapadding-16"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <canvas height="955" width="1026" id="fallingLeavesCanvas"
+                        style="pointer-events: none; background-color: transparent; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
+                    </canvas>
                 </div>
-                <canvas height="955" width="1026" id="fallingLeavesCanvas"
-                    style="pointer-events: none; background-color: transparent; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
-                </canvas>
+                <div class="Toastify"></div>
             </div>
-            <div class="Toastify"></div>
-        </div>
-        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-        <!-- jquery-2.2.4.min.js -->
-        <script src="js/vendor/jquery-2.2.4.min.js"></script>
-        <!-- imageloded.min.js -->
-        <script src="js/imageloded.min.js"></script>
-        <!-- easing-min.js -->
-        <script src="js/easing-min.js"></script>
-        <!-- jquery.slicknav.min.js -->
-        <script src="js/jquery.slicknav.min.js"></script>
-        <!-- isotop.min.js -->
-        <script src="js/isotop.min.js"></script>
-        <!-- magnific-popup.min.js -->
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <!-- jquery.mb.YTPlayer.src.js -->
-        <script src="js/jquery.mb.YTPlayer.src.js"></script>
-        <!-- owl-carousel.js -->
-        <script src="js/owl-carousel.js"></script>
-        <!-- swiper.min.js -->
-        <!-- <script src="js/swiper.min.js"></script> -->
-        <!-- countdown.js -->
-        <script src="js/countdown.js"></script>
-        <!-- bootstrap.min.js -->
-        <!-- <script src="js/bootstrap.min.js"></script> -->
-        <!-- jquery-sticky-menu.js -->
-        <script src="js/jquery-sticky-menu.js"></script>
-        <!-- jquery-validation.js -->
-        <script src="js/validation.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/slide.js"></script>
-        <script src="https://apis.google.com/js/api.js"></script>
-        <script src="https://accounts.google.com/gsi/client"></script>
+            <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+            <!-- jquery-2.2.4.min.js -->
+            <script src="js/vendor/jquery-2.2.4.min.js"></script>
+            <!-- imageloded.min.js -->
+            <script src="js/imageloded.min.js"></script>
+            <!-- easing-min.js -->
+            <script src="js/easing-min.js"></script>
+            <!-- jquery.slicknav.min.js -->
+            <script src="js/jquery.slicknav.min.js"></script>
+            <!-- isotop.min.js -->
+            <script src="js/isotop.min.js"></script>
+            <!-- magnific-popup.min.js -->
+            <script src="js/jquery.magnific-popup.min.js"></script>
+            <!-- jquery.mb.YTPlayer.src.js -->
+            <script src="js/jquery.mb.YTPlayer.src.js"></script>
+            <!-- owl-carousel.js -->
+            <script src="js/owl-carousel.js"></script>
+            <!-- swiper.min.js -->
+            <!-- <script src="js/swiper.min.js"></script> -->
+            <!-- countdown.js -->
+            <script src="js/countdown.js"></script>
+            <!-- bootstrap.min.js -->
+            <!-- <script src="js/bootstrap.min.js"></script> -->
+            <!-- jquery-sticky-menu.js -->
+            <script src="js/jquery-sticky-menu.js"></script>
+            <!-- jquery-validation.js -->
+            <script src="js/validation.js"></script>
+            <script src="js/main.js"></script>
+            <script src="js/slide.js"></script>
+            <script src="https://apis.google.com/js/api.js"></script>
+            <script src="https://accounts.google.com/gsi/client"></script>
 </body>
 
 </html>
