@@ -45,13 +45,11 @@
     
     const cardElement = document.getElementById('cardElement');
     if (cardElement) {
-        cardElement.addEventListener('mouseup', function () {
-            handleAuthClick();
+        cardElement.addEventListener('click', function () {
             playAudio(true);
             flipCard(this);
-            setTimeout(function() {
-                moveImageUp();
-            }, 500); // 10 giây
+            moveImageUp();
+            readData();
         });
     }
 
@@ -150,7 +148,6 @@
         createLeaves(Math.min(leavesToCreate, 5)); // Tạo tối đa 5 lá cây mỗi lần
         leavesToCreate -= 5;
         }
-    
         requestAnimationFrame(animateLeaves);
     }
 
@@ -202,14 +199,8 @@
             $('.preloader').delay(200).fadeOut(500, function () {
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
+                handleAuthClick();
             });
-            setTimeout(function() {
-                flipCard(cardElement);
-                // readData();
-                setTimeout(function() {
-                    moveImageUp();
-                }, 500);
-            }, 5000);
         }
     }
 
