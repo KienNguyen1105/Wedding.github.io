@@ -60,7 +60,6 @@
             const loichuc = document.getElementById('loichuc');
             loichuc.classList.remove('deactive');
             loichuc.classList.add('active');
-            listMajors();
         });
     }
 
@@ -107,11 +106,7 @@
             playAudio(!isMute);
         });
     }
-
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
+    
     // Leaf class
     class Leaf {
         constructor() {
@@ -209,7 +204,7 @@
             });
             setTimeout(function() {
                 flipCard(cardElement);
-                
+                readData();
                 setTimeout(function() {
                     moveImageUp();
                 }, 500);
@@ -445,23 +440,18 @@
         };
 
         if (gapi.client.getToken() === null) {
-          // Prompt the user to select a Google Account and ask for consent to share their data
-          // when establishing a new session.
           tokenClient.requestAccessToken({prompt: 'consent'});
         } else {
-          // Skip display of account chooser and consent dialog for an existing session.
           tokenClient.requestAccessToken({prompt: ''});
         }
     }
 
-    debugger;
-    async function listMajors() {
+    async function readData() {
         let response;
         try {
-          // Fetch first 10 files
           response = await gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
-            range: 'loichuc!A2:C100',
+            range: 'loichuc!A2:C1000',
           });
         } catch (err) {
           document.getElementById('content').innerText = err.message;
@@ -473,89 +463,30 @@
           return;
         }
         // Flatten to string to display
-        const output = range.values.reduce(
-            (str, row) => `${str}${row[0]}, ${row[4]}\n`,
-            'Name, Major:\n');
-            console.log(output);
-        // document.getElementById('content').innerText = output;
+        displayData(range.values);
       }
 
-//     function initClient() {
-//         const token = gapi.client.getToken();
-//         if (token !== null) {
-//             gapi.client.init({
-//             apiKey: 'AIzaSyCRmUOZlH06Lh67BOSJkFEZSZHExsdyFGE', // Thay thế bằng API key của bạn
-//             clientId: '123226093113-unvpa0vfl0uhsgloasf9b23odq4slrt6.apps.googleusercontent.com', // Thay thế bằng Client ID của bạn
-//             discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-//             scope: "https://www.googleapis.com/auth/spreadsheets",
-//             }).then(function () {
-//             // Gọi hàm để xác thực người dùng.
-//             gapi.auth2.getAuthInstance().signIn();
-//             });
-//         }
-//       }
+    // function writeData() {
+    //     const userName = document.getElementById('userName').value;
+    //     const contentMsg = document.getElementById('contentMsg').value;
 
-//        // Ghi dữ liệu vào Google Sheet.
-//     function writeToSheet() {
-//         gapi.client.sheets.spreadsheets.values.append({
-//         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk', // Thay thế bằng ID của Google Sheet của bạn
-//         range: 'loichuc!A2:C100', // Thay thế bằng ô bạn muốn bắt đầu ghi dữ liệu
-//         valueInputOption: 'USER_ENTERED',
-//         resource: {
-//             values: [
-//             ["Data1", "Data2", "Data3"], // Thay thế bằng dữ liệu bạn muốn ghi
-//             ],
-//         },
-//         }).then(function(response) {
-//         console.log('OK ' +response.result);
-//         }, function(reason) {
-//         console.error('Error: ' + reason.result.error.message);
-//         });
-//   } 
-    
+    //     // Mở một giao dịch để ghi dữ liệu
+    //     var transaction = db.transaction(["Wedding"], "readwrite");
+    //     // Lấy kho dữ liệu (object store) trong giao dịch
+    //     var objectStore = transaction.objectStore("Wedding");
+    //     // Dữ liệu cần ghi
+    //     var newData = {
+    //         userName: userName,
+    //         content: contentMsg,
+    //         date: getCurrentDateTime()
+    //     };
+    //     // Thêm dữ liệu mới vào kho dữ liệu
+    //     var addRequest = objectStore.add(newData);
+    //     addRequest.onsuccess = function(event) {
+    //         readData();
+    //     };
+    // }
 
-
-    function writeData() {
-        const userName = document.getElementById('userName').value;
-        const contentMsg = document.getElementById('contentMsg').value;
-
-        // Mở một giao dịch để ghi dữ liệu
-        var transaction = db.transaction(["Wedding"], "readwrite");
-        // Lấy kho dữ liệu (object store) trong giao dịch
-        var objectStore = transaction.objectStore("Wedding");
-        // Dữ liệu cần ghi
-        var newData = {
-            userName: userName,
-            content: contentMsg,
-            date: getCurrentDateTime()
-        };
-        // Thêm dữ liệu mới vào kho dữ liệu
-        var addRequest = objectStore.add(newData);
-        addRequest.onsuccess = function(event) {
-            readData();
-        };
-    }
-
-    function readData() {
-        // Mở một giao dịch để đọc dữ liệu
-        var transaction = db.transaction(["Wedding"], "readonly");
-        // Lấy kho dữ liệu (object store) trong giao dịch
-        var objectStore = transaction.objectStore("Wedding");
-        // Mở một cursor để duyệt qua từng mục trong kho dữ liệu
-        var cursorRequest = objectStore.openCursor();
-        var dataList = [];
-        
-        cursorRequest.onsuccess = function(event) {
-            var cursor = event.target.result;
-            if (cursor) {
-                dataList.push(cursor.value);
-                cursor.continue();
-            } 
-            else {
-                displayData(dataList);
-            }
-        };
-    }
     
     function getCurrentDateTime() {
         const now = new Date();
@@ -576,8 +507,8 @@
         return formattedDateTime;
     }
 
-    function displayData(dataList){
-        dataList.forEach(function(data) {
+    function displayData(range){
+        range.forEach(row => {
            var htmlString = `
                 <div class="slide">
                     <div class="max-width-448 padding-16 relative" style="width: 100%;">
@@ -589,10 +520,10 @@
                             style="background: rgba(238, 241, 239, 0.5); width: 100%; border-radius: 8px;">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAWCAYAAABnnAr9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUvSURBVHgB7VhfTxxVFD/n7syy5U+plcaCGqIx7QfYDyAfoG20lFqalJKQwEsFDBge4cUHkm4r1BdoiArabRTUuDz50v0C+N6NDyUmVNtGilthYXfu8ZyZWXdmugssu5m++Evu3tn7b87v3PPn3kFg3EkudFiG2SvPxxTeG+q+9nh2eamXFAxCgZIjl/vmoY6Y+fHbOFpWh1LRhzcuXskE+0DrQSCKI+nkcE9/AuqM/fiihvnhS9eSwTloC7e8mOKq3W5A2FBI45bGe6VBmCg3+SgC6mh0UpRQbFOIqe3ne7cmBgayt7//skth5KZvktZDI5f716COCPIFgrsEMOn0YjaidOLGxeur3jnK7WwuNhBBh0V41zuIgMbuMAmoEdowBr1KstuIzsdaTVs5rKSx4ByMqMm5laV2qCv8fFlJn5b6qIWNZOqL+1+f8c5QYnLc+SKwUGdw6YIyHkLN8mG8Qk+cd3kQ3F32QojkiFIz39n9NcN9TxABvpjNmyrrbVGWU/sFRDDdogixhV0vpwimZpaX5oKargpi5pX7Pob9EMFzUAcQQotYja9RYYP8Cl8WpBVQPxO+syvf3CzyVZ/YsUc7wRqxUQYSkcHm+AbX7yL/sOvFePG4FMtUvVAlphcWWqSwHNnKo/AE/BcKyqIucWq0uy9h8xWllPgiK/A01538lGdtviNciXRXka8tGEJECOzyQJNbZHIDaGhGRGn3uyVBl5CGKnCsNXqO49ADeXHFQY7grZW6NUAdM68SHjvs1zHhyx7TyC84jqiySLDtG8p8pTI+X1kcYwX1OrLCFkfXLRb4PVT0J5vS6zx5jxfc9MzMNDUZ4qrZw4q1Y+ytNuTNq5xhDgjKxJsEpXeJ8ggbCfSjCKgxdn17gxS7cJQVJ2kdqoTwZfJFr/iL+YonHed3yVqnueTAZxyUuc3JxMDSJAfir1qLlJvoTGDTtBdJ7/6dn5c0DlVi4oOB7HRyYajBMOcqKovYogHa7POKuATCSW5r4njxhP2izWuNzC3Og0Vp41AFpn9i9y8E+NruRzu2kRBtswu+xvWvqCmdy1rJIl/lKsE/F3DdfWR/pWdcp0d7+hJHUVIRE70DG7uF/BAfB1bdlyg7TSO22cU2FIiwoG+z4J2kdYzfvc4WtVluPY3UAVVCNuxlvqSh1JZnw3mCGtN8dvMZhRLhoSg8B0xtFST75L1LocL3oQ4QZSnDkMMexwE8xUK+yeVUqXBUBGRLwedc/waOG5QF67m92lgpsPmWEsMaW+tnEOBbLsNisEHMM1aI/uym0A1N1q0IGu21nsyF1LET5iS5wbEItqCY8wCS9U7aQqE041NyrLky+LpR6/XK4Ws+cP/afHkTmkd7/CdzLDc58cP9M6beO7uzlU/X4m5eeK8NZYF4lrUlWVjOWq5b4R/+ROIHH1syo5euX4UacRi+CCFgdnnxfOkuVU4KO6B2isuxYh6zVDG2pre4XeLWugR6z+g1tra0UnqN72MZCAkGhACS+x3uuyeu+7muRpCTGMVuyqdkO7s94rLB66SCLhEWQlHUIWByeQrBJGKnbJAvCFP1/oJQLRSEAYNS+/Yj/c4KqRy4larLhbgWhKKokQ/713L5/AX2vrS/B7No6QRY9MsBS8SPchSoJ8KxKHDOUMPdfeOc95Mcr1LyMTC3tXdh+KP+JMfsAz/huNemV4bQY5Rze/eDIlYGrJf2bCNSoPF/qPDCVGZ85Ep4Ga4cQjkeHAYzy19xHJJYhHzNoNWj3iv/xyvGv6+gVHgz8sDVAAAAAElFTkSuQmCC"
                                 alt="" class="w-4" style="width: 90px; margin: auto;">
-                            <p class="text-text text-14 padding-16 line-height-28">${data.content}</p>
+                            <p class="text-text text-14 padding-16 line-height-28">${row[1]}</p>
                             <div>
-                                <h2 class="text-16  line-height-24 font-medium">-${data.userName}-</h2>
-                                <p class="text-16 font-light">${data.date}</p>
+                                <h2 class="text-16  line-height-24 font-medium">-${row[0]}-</h2>
+                                <p class="text-16 font-light">${row[2]}</p>
                             </div>
                         </div>
                     </div>
