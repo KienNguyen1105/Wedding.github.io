@@ -31,6 +31,8 @@
     Window Load
     ==================================*/
     $(window).on('load', function () {
+        gapiLoaded();
+        gisLoaded();
         smoothScrolling($(".main-menu nav ul li a[href^='#']"), headerHeight);
         smoothScrolling($(".scrollup a[href^='#']"), 0);
         smoothScrolling($(".welcome-content .btn a[href^='#']"), 0);
@@ -39,34 +41,8 @@
         sliderLoadedAddClass();
         preloader();
         animateLeaves();
-        initDatabase();
     })
-
-    function initDatabase() {
-        var dbRequest = indexedDB.open("MyWedding", 2);
     
-        dbRequest.onupgradeneeded = function(event) {
-            db = event.target.result;
-    
-            // Kiểm tra và tạo cấu trúc cơ sở dữ liệu nếu cần
-            if (!db.objectStoreNames.contains("Wedding")) {
-                var objectStore = db.createObjectStore("Wedding", { keyPath: "id", autoIncrement: true });
-    
-                objectStore.createIndex("userNameIndex", "userName", { unique: false });
-                objectStore.createIndex("dateIndex", "date", { unique: false });
-            }
-        };
-    
-        dbRequest.onsuccess = function(event) {
-            db = event.target.result;
-            readData();
-        };
-    
-        dbRequest.onerror = function(event) {
-            console.error("Error opening database:", event.target.error);
-        };
-    }
-
     const cardElement = document.getElementById('cardElement');
     if (cardElement) {
         cardElement.addEventListener('mouseup', function () {
@@ -84,6 +60,7 @@
             const loichuc = document.getElementById('loichuc');
             loichuc.classList.remove('deactive');
             loichuc.classList.add('active');
+            listMajors();
         });
     }
 
@@ -92,6 +69,7 @@
         btnSendMsg.addEventListener('mouseup', function () {
             writeData();
             readData();
+            writeToSheet();
         });
     }
 
@@ -162,24 +140,20 @@
     }
 
     let leavesToCreate = 5;
-    function createLeaf() {
-        const leaf = new Leaf();
-        leaves.push(leaf);
-      }
       
-      function animateLeaves() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-        leaves.forEach((leaf) => {
-          leaf.update();
-          leaf.draw();
-        });
-      
-        if (leavesToCreate > 0 && Math.random() < 0.01) {
-            createLeaves(Math.min(leavesToCreate, 5)); // Tạo tối đa 5 lá cây mỗi lần
-            leavesToCreate -= 5;
-          }
-      
+    function animateLeaves() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    leaves.forEach((leaf) => {
+        leaf.update();
+        leaf.draw();
+    });
+    
+    if (leavesToCreate > 0 && Math.random() < 0.01) {
+        createLeaves(Math.min(leavesToCreate, 5)); // Tạo tối đa 5 lá cây mỗi lần
+        leavesToCreate -= 5;
+        }
+    
         requestAnimationFrame(animateLeaves);
     }
 
@@ -231,9 +205,11 @@
             $('.preloader').delay(200).fadeOut(500, function () {
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
+                handleAuthClick();
             });
             setTimeout(function() {
                 flipCard(cardElement);
+                
                 setTimeout(function() {
                     moveImageUp();
                 }, 500);
@@ -431,6 +407,113 @@
         sync3.data('owl.carousel').to(number, 100, true);
         }
     }
+
+    const CLIENT_ID = '123226093113-unvpa0vfl0uhsgloasf9b23odq4slrt6.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCRmUOZlH06Lh67BOSJkFEZSZHExsdyFGE';
+    const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+    let tokenClient;
+    let gapiInited = false;
+    let gisInited = false;
+
+    function gapiLoaded() {
+        gapi.load('client', initializeGapiClient);
+    }
+
+    async function initializeGapiClient() {
+        await gapi.client.init({
+          apiKey: API_KEY,
+          discoveryDocs: [DISCOVERY_DOC],
+        });
+        gapiInited = true;
+    }
+
+    function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES,
+          callback: '', // defined later
+        });
+        gisInited = true;
+      }
+
+    function handleAuthClick() {
+        tokenClient.callback = async (resp) => {
+          if (resp.error !== undefined) {
+            throw (resp);
+          }
+        };
+
+        if (gapi.client.getToken() === null) {
+          // Prompt the user to select a Google Account and ask for consent to share their data
+          // when establishing a new session.
+          tokenClient.requestAccessToken({prompt: 'consent'});
+        } else {
+          // Skip display of account chooser and consent dialog for an existing session.
+          tokenClient.requestAccessToken({prompt: ''});
+        }
+    }
+
+    debugger;
+    async function listMajors() {
+        let response;
+        try {
+          // Fetch first 10 files
+          response = await gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
+            range: 'loichuc!A2:C100',
+          });
+        } catch (err) {
+          document.getElementById('content').innerText = err.message;
+          return;
+        }
+        const range = response.result;
+        if (!range || !range.values || range.values.length == 0) {
+          document.getElementById('content').innerText = 'No values found.';
+          return;
+        }
+        // Flatten to string to display
+        const output = range.values.reduce(
+            (str, row) => `${str}${row[0]}, ${row[4]}\n`,
+            'Name, Major:\n');
+            console.log(output);
+        // document.getElementById('content').innerText = output;
+      }
+
+//     function initClient() {
+//         const token = gapi.client.getToken();
+//         if (token !== null) {
+//             gapi.client.init({
+//             apiKey: 'AIzaSyCRmUOZlH06Lh67BOSJkFEZSZHExsdyFGE', // Thay thế bằng API key của bạn
+//             clientId: '123226093113-unvpa0vfl0uhsgloasf9b23odq4slrt6.apps.googleusercontent.com', // Thay thế bằng Client ID của bạn
+//             discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+//             scope: "https://www.googleapis.com/auth/spreadsheets",
+//             }).then(function () {
+//             // Gọi hàm để xác thực người dùng.
+//             gapi.auth2.getAuthInstance().signIn();
+//             });
+//         }
+//       }
+
+//        // Ghi dữ liệu vào Google Sheet.
+//     function writeToSheet() {
+//         gapi.client.sheets.spreadsheets.values.append({
+//         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk', // Thay thế bằng ID của Google Sheet của bạn
+//         range: 'loichuc!A2:C100', // Thay thế bằng ô bạn muốn bắt đầu ghi dữ liệu
+//         valueInputOption: 'USER_ENTERED',
+//         resource: {
+//             values: [
+//             ["Data1", "Data2", "Data3"], // Thay thế bằng dữ liệu bạn muốn ghi
+//             ],
+//         },
+//         }).then(function(response) {
+//         console.log('OK ' +response.result);
+//         }, function(reason) {
+//         console.error('Error: ' + reason.result.error.message);
+//         });
+//   } 
+    
+
 
     function writeData() {
         const userName = document.getElementById('userName').value;
