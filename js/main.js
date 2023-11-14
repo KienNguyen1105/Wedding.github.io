@@ -46,6 +46,7 @@
     const cardElement = document.getElementById('cardElement');
     if (cardElement) {
         cardElement.addEventListener('mouseup', function () {
+            handleAuthClick();
             playAudio(true);
             flipCard(this);
             setTimeout(function() {
@@ -66,8 +67,10 @@
     const btnSendMsg = document.getElementById('btnSendMsg');
     if (btnSendMsg) {
         btnSendMsg.addEventListener('mouseup', async function (event) {
-            event.preventDefault();
-           await writeData();
+            const loichuc = document.getElementById('loichuc');
+            loichuc.classList.remove('active');
+            loichuc.classList.add('deactive');
+            await writeData();
         });
     }
 
@@ -195,11 +198,10 @@
     function preloader() {
         if ($('.preloader').length) {
             if(app && content)
-                // app.removeChild(content);
+                app.removeChild(content);
             $('.preloader').delay(200).fadeOut(500, function () {
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
-                // handleAuthClick();
             });
             setTimeout(function() {
                 flipCard(cardElement);
@@ -246,28 +248,28 @@
     }
 
     function playAudio(play) {
-        // if (audio.paused) {
-        //     if (bntnmute && bntmute) {
-        //         bntnmute.style.display = 'block'
-        //         bntmute.style.display = 'none'
-        //     }
-        //     audio.loop = true;
-        //     audio.play();
-        // } else if (!play) {
-        //     if (bntnmute && bntmute) {
-        //         bntnmute.style.display = 'none'
-        //         bntmute.style.display = 'block'
-        //     }
-        //     audio.pause();
-        // }
-        // isMute = play;
+        if (audio.paused) {
+            if (bntnmute && bntmute) {
+                bntnmute.style.display = 'block'
+                bntmute.style.display = 'none'
+            }
+            audio.loop = true;
+            audio.play();
+        } else if (!play) {
+            if (bntnmute && bntmute) {
+                bntnmute.style.display = 'none'
+                bntmute.style.display = 'block'
+            }
+            audio.pause();
+        }
+        isMute = play;
     }
 
     var sync1 = $("#sync1");
     var sync2 = $("#sync2");
     var sync3 = $("#sync3");
     var sync4 = $("#sync4");
-    var slidesPerPage = 4; //globaly define number of elements per page
+    var slidesPerPage = 4;
     var syncedSecondary = true;
     
     sync1.owlCarousel({
@@ -321,10 +323,6 @@
     }).on('changed.owl.carousel', syncPosition4);
     
     function syncPosition(el) {
-        //if you set loop to false, you have to restore this next line
-        //var current = el.item.index;
-        
-        //if you disable loop you have to comment this block
         var count = el.item.count-1;
         var current = Math.round(el.item.index - (el.item.count/2) - .5);
         
@@ -334,8 +332,6 @@
         if(current > count) {
         current = 0;
         }
-        
-        //end block
     
         sync2
         .find(".owl-item")
@@ -355,10 +351,6 @@
     }
 
     function syncPosition3(el) {
-        //if you set loop to false, you have to restore this next line
-        //var current = el.item.index;
-        
-        //if you disable loop you have to comment this block
         var count = el.item.count-1;
         var current = Math.round(el.item.index - (el.item.count/2) - .5);
         
@@ -407,8 +399,6 @@
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
     let tokenClient;
-    let gapiInited = false;
-    let gisInited = false;
 
     function gapiLoaded() {
         gapi.load('client', initializeGapiClient);
@@ -419,7 +409,6 @@
           apiKey: API_KEY,
           discoveryDocs: [DISCOVERY_DOC],
         });
-        gapiInited = true;
     }
 
     function gisLoaded() {
@@ -428,7 +417,6 @@
           scope: SCOPES,
           callback: '', // defined later
         });
-        gisInited = true;
       }
 
     function handleAuthClick() {
