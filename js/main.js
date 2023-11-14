@@ -69,6 +69,7 @@
             loichuc.classList.remove('active');
             loichuc.classList.add('deactive');
             await writeData();
+            await readData();
         });
     }
 
