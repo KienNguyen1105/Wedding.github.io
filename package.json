@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^10.4.16",
+    "firebase": "^10.6.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^2.2.19"
   }
