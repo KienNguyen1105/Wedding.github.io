@@ -193,7 +193,6 @@
             if(app && content)
                 app.removeChild(content);
             $('.preloader').delay(200).fadeOut(500, function () {
-                document.getElementById('btnloichuc').disabled = true;
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
             });
