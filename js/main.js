@@ -31,8 +31,6 @@
     Window Load
     ==================================*/
     $(window).on('load', function () {
-        gapiLoaded();
-        gisLoaded();
         smoothScrolling($(".main-menu nav ul li a[href^='#']"), headerHeight);
         smoothScrolling($(".scrollup a[href^='#']"), 0);
         smoothScrolling($(".welcome-content .btn a[href^='#']"), 0);
@@ -49,7 +47,6 @@
             playAudio(true);
             flipCard(this);
             moveImageUp();
-            readData();
         });
     }
 
@@ -68,8 +65,6 @@
             const loichuc = document.getElementById('loichuc');
             loichuc.classList.remove('active');
             loichuc.classList.add('deactive');
-            await writeData();
-            await readData();
         });
     }
 
@@ -200,7 +195,6 @@
             $('.preloader').delay(200).fadeOut(500, function () {
                 if(app && preloadercls)
                     app.removeChild(preloadercls);
-                handleAuthClick();
             });
         }
     }
@@ -386,80 +380,41 @@
         }
     }
 
-    const CLIENT_ID = '123226093113-unvpa0vfl0uhsgloasf9b23odq4slrt6.apps.googleusercontent.com';
-    const API_KEY = 'AIzaSyCRmUOZlH06Lh67BOSJkFEZSZHExsdyFGE';
-    const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
-    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
-    let tokenClient;
+    // async function readData() {
+    //     let response;
+    //     try {
+    //       response = await gapi.client.sheets.spreadsheets.values.get({
+    //         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
+    //         range: 'loichuc!A2:C1000',
+    //       });
+    //     } catch (err) {
+    //       document.getElementById('content').innerText = err.message;
+    //       return;
+    //     }
+    //     const range = response.result;
+    //     if (!range || !range.values || range.values.length == 0) {
+    //       document.getElementById('content').innerText = 'No values found.';
+    //       return;
+    //     }
+    //     // Flatten to string to display
+    //     displayData(range.values);
+    // }
 
-    function gapiLoaded() {
-        gapi.load('client', initializeGapiClient);
-    }
-
-    async function initializeGapiClient() {
-        await gapi.client.init({
-          apiKey: API_KEY,
-          discoveryDocs: [DISCOVERY_DOC],
-        });
-    }
-
-    function gisLoaded() {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-          client_id: CLIENT_ID,
-          scope: SCOPES,
-          callback: '', // defined later
-        });
-      }
-
-    function handleAuthClick() {
-        tokenClient.callback = async (resp) => {
-          if (resp.error !== undefined) {
-            throw (resp);
-          }
-        };
-
-        if (gapi.client.getToken() === null) {
-          tokenClient.requestAccessToken({prompt: 'consent'});
-        } else {
-          tokenClient.requestAccessToken({prompt: ''});
-        }
-    }
-
-    async function readData() {
-        let response;
-        try {
-          response = await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
-            range: 'loichuc!A2:C1000',
-          });
-        } catch (err) {
-          document.getElementById('content').innerText = err.message;
-          return;
-        }
-        const range = response.result;
-        if (!range || !range.values || range.values.length == 0) {
-          document.getElementById('content').innerText = 'No values found.';
-          return;
-        }
-        // Flatten to string to display
-        displayData(range.values);
-    }
-
-    async function writeData() {
-        const userName = document.getElementById('userName').value;
-        const contentMsg = document.getElementById('contentMsg').value;
-        const newValues = [ [userName, contentMsg, getCurrentDateTime()],];
-        await gapi.client.sheets.spreadsheets.values.append({
-            spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
-            range: 'loichuc!A:C',
-            valueInputOption: 'RAW', // Hoặc 'USER_ENTERED'
-            insertDataOption: 'INSERT_ROWS', // Để chèn một hàng mới
-            resource: {
-              values: newValues,
-            },
-        });
-        readData();
-    }
+    // async function writeData() {
+    //     const userName = document.getElementById('userName').value;
+    //     const contentMsg = document.getElementById('contentMsg').value;
+    //     const newValues = [ [userName, contentMsg, getCurrentDateTime()],];
+    //     await gapi.client.sheets.spreadsheets.values.append({
+    //         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
+    //         range: 'loichuc!A:C',
+    //         valueInputOption: 'RAW', // Hoặc 'USER_ENTERED'
+    //         insertDataOption: 'INSERT_ROWS', // Để chèn một hàng mới
+    //         resource: {
+    //           values: newValues,
+    //         },
+    //     });
+    //     readData();
+    // }
     
     function getCurrentDateTime() {
         const now = new Date();
