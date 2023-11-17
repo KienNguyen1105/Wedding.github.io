@@ -225,20 +225,20 @@
     }
 
     function playAudio(play) {
-        // if (audio.paused) {
-        //     if (bntnmute && bntmute) {
-        //         bntnmute.style.display = 'block'
-        //         bntmute.style.display = 'none'
-        //     }
-        //     audio.loop = true;
-        //     audio.play();
-        // } else if (!play) {
-        //     if (bntnmute && bntmute) {
-        //         bntnmute.style.display = 'none'
-        //         bntmute.style.display = 'block'
-        //     }
-        //     audio.pause();
-        // }
+        if (audio.paused) {
+            if (bntnmute && bntmute) {
+                bntnmute.style.display = 'block'
+                bntmute.style.display = 'none'
+            }
+            audio.loop = true;
+            audio.play();
+        } else if (!play) {
+            if (bntnmute && bntmute) {
+                bntnmute.style.display = 'none'
+                bntmute.style.display = 'block'
+            }
+            audio.pause();
+        }
         isMute = play;
     }
 
