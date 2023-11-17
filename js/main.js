@@ -292,7 +292,7 @@
 
     sync4
         .on('initialized.owl.carousel', function () {
-        sync2.find(".owl-item").eq(0).addClass("current");
+        sync4.find(".owl-item").eq(0).addClass("current");
         })
         .owlCarousel({
         items : slidesPerPage,
