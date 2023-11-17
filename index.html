@@ -1061,7 +1061,7 @@
                                 <div class="modal-block ">
                                     <div class="modal-content overflow-hidden modal-mw padding-16 border-radius-8"
                                         style="width: 100%;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="display: none;"
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                             viewBox="0 0 32 32" fill="none" id="closeloichuc" class="close-modal-icon">
                                             <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokeWidth="2"
                                                 strokeLinecap="round" strokeLinejoin="round" />
@@ -1212,6 +1212,8 @@
                 loichuc.classList.add('deactive');
                 writeData();
                 readData();
+                document.getElementById('userName').value = '';
+                document.getElementById('contentMsg').value = '';
             });
         }
 
@@ -1220,7 +1222,7 @@
             var htmlString = `
                 <div class="slide">
                     <div class="max-width-448 padding-16 relative" style="width: 100%;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" id="closeloichuc" style="width: 28px; position: absolute; right: 24px; top: 24px; cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" width="32" height="32" viewBox="0 0 32 32" fill="none" id="closeloichuc" style="width: 28px; position: absolute; right: 24px; top: 24px; cursor: pointer;">
                                         <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokewidth="2" strokelinecap="round" strokelinejoin="round"></path>
                                         <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokewidth="2" strokelinecap="round" strokelinejoin="round"></path>
                         </svg>
