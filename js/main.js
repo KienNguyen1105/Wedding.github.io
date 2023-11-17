@@ -53,18 +53,9 @@
     const btnloichuc = document.getElementById('btnloichuc');
     if (btnloichuc) {
         btnloichuc.addEventListener('mouseup', function () {
-            // const loichuc = document.getElementById('loichuc');
-            // loichuc.classList.remove('deactive');
-            // loichuc.classList.add('active');
-        });
-    }
-
-    const btnSendMsg = document.getElementById('btnSendMsg');
-    if (btnSendMsg) {
-        btnSendMsg.addEventListener('mouseup', async function (event) {
             const loichuc = document.getElementById('loichuc');
-            loichuc.classList.remove('active');
-            loichuc.classList.add('deactive');
+            loichuc.classList.remove('deactive');
+            loichuc.classList.add('active');
         });
     }
 
@@ -381,87 +372,5 @@
         var number = el.item.index;
         sync3.data('owl.carousel').to(number, 100, true);
         }
-    }
-
-    // async function readData() {
-    //     let response;
-    //     try {
-    //       response = await gapi.client.sheets.spreadsheets.values.get({
-    //         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
-    //         range: 'loichuc!A2:C1000',
-    //       });
-    //     } catch (err) {
-    //       document.getElementById('content').innerText = err.message;
-    //       return;
-    //     }
-    //     const range = response.result;
-    //     if (!range || !range.values || range.values.length == 0) {
-    //       document.getElementById('content').innerText = 'No values found.';
-    //       return;
-    //     }
-    //     // Flatten to string to display
-    //     displayData(range.values);
-    // }
-
-    // async function writeData() {
-    //     const userName = document.getElementById('userName').value;
-    //     const contentMsg = document.getElementById('contentMsg').value;
-    //     const newValues = [ [userName, contentMsg, getCurrentDateTime()],];
-    //     await gapi.client.sheets.spreadsheets.values.append({
-    //         spreadsheetId: '1qoUAZbvEWCx615aSJGQKhfvIep7JmUUOy4xmNTH3juk',
-    //         range: 'loichuc!A:C',
-    //         valueInputOption: 'RAW', // Hoặc 'USER_ENTERED'
-    //         insertDataOption: 'INSERT_ROWS', // Để chèn một hàng mới
-    //         resource: {
-    //           values: newValues,
-    //         },
-    //     });
-    //     readData();
-    // }
-    
-    function getCurrentDateTime() {
-        const now = new Date();
-      
-        // Lấy ngày, tháng, năm
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
-        const year = now.getFullYear();
-      
-        // Lấy giờ, phút, giây
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-      
-        // Tạo định dạng "dd.mm.yyyy hh:mm:ss"
-        const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
-      
-        return formattedDateTime;
-    }
-
-    function displayData(range){
-        range.forEach(row => {
-           var htmlString = `
-                <div class="slide">
-                    <div class="max-width-448 padding-16 relative" style="width: 100%;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" id="closeloichuc" style="width: 28px; position: absolute; right: 24px; top: 24px; cursor: pointer;">
-                                        <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokewidth="2" strokelinecap="round" strokelinejoin="round"></path>
-                                        <path d="M23 9L9 23" stroke="#585858" stroke-opacity="0.6" strokewidth="2" strokelinecap="round" strokelinejoin="round"></path>
-                        </svg>
-                        <div class="padding-16"
-                            style="background: rgba(238, 241, 239, 0.5); width: 100%; border-radius: 8px;">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAAAWCAYAAABnnAr9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAUvSURBVHgB7VhfTxxVFD/n7syy5U+plcaCGqIx7QfYDyAfoG20lFqalJKQwEsFDBge4cUHkm4r1BdoiArabRTUuDz50v0C+N6NDyUmVNtGilthYXfu8ZyZWXdmugssu5m++Evu3tn7b87v3PPn3kFg3EkudFiG2SvPxxTeG+q+9nh2eamXFAxCgZIjl/vmoY6Y+fHbOFpWh1LRhzcuXskE+0DrQSCKI+nkcE9/AuqM/fiihvnhS9eSwTloC7e8mOKq3W5A2FBI45bGe6VBmCg3+SgC6mh0UpRQbFOIqe3ne7cmBgayt7//skth5KZvktZDI5f716COCPIFgrsEMOn0YjaidOLGxeur3jnK7WwuNhBBh0V41zuIgMbuMAmoEdowBr1KstuIzsdaTVs5rKSx4ByMqMm5laV2qCv8fFlJn5b6qIWNZOqL+1+f8c5QYnLc+SKwUGdw6YIyHkLN8mG8Qk+cd3kQ3F32QojkiFIz39n9NcN9TxABvpjNmyrrbVGWU/sFRDDdogixhV0vpwimZpaX5oKargpi5pX7Pob9EMFzUAcQQotYja9RYYP8Cl8WpBVQPxO+syvf3CzyVZ/YsUc7wRqxUQYSkcHm+AbX7yL/sOvFePG4FMtUvVAlphcWWqSwHNnKo/AE/BcKyqIucWq0uy9h8xWllPgiK/A01538lGdtviNciXRXka8tGEJECOzyQJNbZHIDaGhGRGn3uyVBl5CGKnCsNXqO49ADeXHFQY7grZW6NUAdM68SHjvs1zHhyx7TyC84jqiySLDtG8p8pTI+X1kcYwX1OrLCFkfXLRb4PVT0J5vS6zx5jxfc9MzMNDUZ4qrZw4q1Y+ytNuTNq5xhDgjKxJsEpXeJ8ggbCfSjCKgxdn17gxS7cJQVJ2kdqoTwZfJFr/iL+YonHed3yVqnueTAZxyUuc3JxMDSJAfir1qLlJvoTGDTtBdJ7/6dn5c0DlVi4oOB7HRyYajBMOcqKovYogHa7POKuATCSW5r4njxhP2izWuNzC3Og0Vp41AFpn9i9y8E+NruRzu2kRBtswu+xvWvqCmdy1rJIl/lKsE/F3DdfWR/pWdcp0d7+hJHUVIRE70DG7uF/BAfB1bdlyg7TSO22cU2FIiwoG+z4J2kdYzfvc4WtVluPY3UAVVCNuxlvqSh1JZnw3mCGtN8dvMZhRLhoSg8B0xtFST75L1LocL3oQ4QZSnDkMMexwE8xUK+yeVUqXBUBGRLwedc/waOG5QF67m92lgpsPmWEsMaW+tnEOBbLsNisEHMM1aI/uym0A1N1q0IGu21nsyF1LET5iS5wbEItqCY8wCS9U7aQqE041NyrLky+LpR6/XK4Ws+cP/afHkTmkd7/CdzLDc58cP9M6beO7uzlU/X4m5eeK8NZYF4lrUlWVjOWq5b4R/+ROIHH1syo5euX4UacRi+CCFgdnnxfOkuVU4KO6B2isuxYh6zVDG2pre4XeLWugR6z+g1tra0UnqN72MZCAkGhACS+x3uuyeu+7muRpCTGMVuyqdkO7s94rLB66SCLhEWQlHUIWByeQrBJGKnbJAvCFP1/oJQLRSEAYNS+/Yj/c4KqRy4larLhbgWhKKokQ/713L5/AX2vrS/B7No6QRY9MsBS8SPchSoJ8KxKHDOUMPdfeOc95Mcr1LyMTC3tXdh+KP+JMfsAz/huNemV4bQY5Rze/eDIlYGrJf2bCNSoPF/qPDCVGZ85Ep4Ga4cQjkeHAYzy19xHJJYhHzNoNWj3iv/xyvGv6+gVHgz8sDVAAAAAElFTkSuQmCC"
-                                alt="" class="w-4" style="width: 90px; margin: auto;">
-                            <p class="text-text text-14 padding-16 line-height-28">${row[1]}</p>
-                            <div>
-                                <h2 class="text-16  line-height-24 font-medium">-${row[0]}-</h2>
-                                <p class="text-16 font-light">${row[2]}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            $("#sync3").trigger('add.owl.carousel', [$(htmlString)]).trigger('refresh.owl.carousel');
-            $("#sync4").trigger('add.owl.carousel', [$(htmlString)]).trigger('refresh.owl.carousel');
-        });
-    }
+    }    
 }(jQuery));
