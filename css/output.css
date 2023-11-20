@@ -31588,7 +31588,7 @@ video {
 }
 
 #movingImage {
-  top: 0px;
+  top: 3px;
   transition: top 5s;
   /* Hiệu ứng di chuyển kéo dài 3 giây */
 }
