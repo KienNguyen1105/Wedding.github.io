@@ -320,69 +320,9 @@
                     <div class>
                         <div class="relative">
                             <div class="carousel-root">
-                                <div class="carousel carousel-slider">
+                                <div class="carousel-wrap">
                                     <div id="sync1" style="width: 100%;"
-                                        class=" slider-wrapper axis-horizontal slider animated gallery-image relative owl-carousel owl-theme">
-                                        <div class="item gallery-image ">
-                                            <img src="image/1.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/2.jpg"  alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/3.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/4.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/5.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/6.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/7.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/8.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/9.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/10.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/11.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/12.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/13.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/14.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/15.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/16.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/17.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/18.jpg" alt="image gallery">
-                                        </div>
-                                        <div class="item gallery-image ">
-                                            <img src="image/19.jpg" alt="image gallery">
-                                        </div>
-                                    </div>
-                                    <div id="sync2" style="width: 100%; display: none;"
-                                        class=" slider-wrapper axis-horizontal slider animated gallery-image relative owl-carousel owl-theme">
+                                        class=" slider-wrapper axis-horizontal slider animated gallery-image relative owl-carousel">
                                         <div class="item gallery-image ">
                                             <img src="image/1.jpg" alt="image gallery">
                                         </div>
@@ -492,11 +432,13 @@
                         </svg>
                     </div>
                     <div class="pt-5  pb-3">
-                        <div class=""><iframe frameborder="0" allowfullscreen="1"
+                        <div class="">
+                            <iframe frameborder="0" allowfullscreen="1"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 title="Văn Kiên - Thuý Quỳnh" width="100%" height="325"
                                 src="https://www.youtube.com/embed/GGpPTQTDlR4?enablejsapi=1&amp;widgetid=1"
-                                id="widget2" data-gtm-yt-inspected-6="true" loading="lazy"></iframe></div>
+                                id="widget2" data-gtm-yt-inspected-6="true" loading="lazy"></iframe>
+                        </div>
                     </div>
                 </div>
                 <div class="padding-40 bg-main-bg section-mb layout-mw" id="time-location"
@@ -587,7 +529,8 @@
                                                 <path
                                                     d="M8.86473 9.38197C8.59171 11.0943 12.4755 13.8526 14.872 13.101C15.6209 12.866 15.9238 12.3833 17.3749 11.9568C18.4289 11.6471 19.0714 11.6662 19.2344 11.2415C19.3901 10.8358 18.9138 10.5302 18.519 9.52505C18.0658 8.3705 18.4054 8.03817 18.0898 7.52247C17.2667 6.17777 13.8596 6.64502 11.5818 7.52247C10.1805 8.06217 9.00282 8.51584 8.86473 9.38197Z"
                                                     fill="#91ADA3" fill-opacity="0.5"></path>
-                                            </svg></div>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1023,11 +966,9 @@
                     <div class="carousel-root slider_cmt">
                         <div class="carousel carousel-slider" style="width: 100%;">
                             <div class="slider-wrapper axis-horizontal">
-                                <div class="slider animated" id="loichucaaaaa"
+                                <div class="slider animated carousel-wrap" id="loichucaaaaa"
                                     style="transform: translate3d(0px, 0px, 0px); transition-duration: 350ms; display:-webkit-box !important;">
-                                    <div id="sync3" class="owl-carousel owl-theme">
-                                    </div>
-                                    <div id="sync4" style="display: none;" class="owl-carousel owl-theme">
+                                    <div id="sync2" class="owl-carousel">
                                     </div>
                                 </div>
                             </div>
@@ -1116,7 +1057,6 @@
                         style="pointer-events: none; background-color: transparent; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%;">
                     </canvas>
                 </div>
-                <div class="Toastify"></div>
             </div>
         </div>  
     </div>
@@ -1206,7 +1146,7 @@
         function displayData(snapshot){
             snapshot.forEach(row => {
             var htmlString = `
-                <div class="slide">
+                <div class="slide item">
                     <div class="max-width-448 padding-16 relative" style="width: 100%;">
                         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" width="32" height="32" viewBox="0 0 32 32" fill="none" id="closeloichuc" style="width: 28px; position: absolute; right: 24px; top: 24px; cursor: pointer;">
                                         <path d="M23 23L9 9" stroke="#585858" stroke-opacity="0.6" strokewidth="2" strokelinecap="round" strokelinejoin="round"></path>
@@ -1225,8 +1165,7 @@
                     </div>
                 </div>
             `;
-            $("#sync3").trigger('add.owl.carousel', [$(htmlString)]).trigger('refresh.owl.carousel');
-            $("#sync4").trigger('add.owl.carousel', [$(htmlString)]).trigger('refresh.owl.carousel');
+            $("#sync2").trigger('add.owl.carousel', [$(htmlString)]).trigger('refresh.owl.carousel');
         });
     }
 

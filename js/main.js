@@ -241,138 +241,45 @@
         }
         isMute = play;
     }
-
-    var sync1 = $("#sync1");
-    var sync2 = $("#sync2");
-    var sync3 = $("#sync3");
-    var sync4 = $("#sync4");
-    var slidesPerPage = 4;
-    var syncedSecondary = true;
     
-    sync1.owlCarousel({
-        items: 1,
-        slideSpeed: 1000,
-        nav: true,
-        autoplay: true,
-        dots: true,
+    $('#sync1').owlCarousel({
         loop: true,
-        responsiveRefreshRate: 200,
-        animateOut: 'slideOutUp',
-        touchDrag: false,
+        nav: true,
         navText: [
             '<span style="background-color: rgba(31,41,55,.3);border-radius: 9999px;" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"></path></svg><span class="sr-only">Previous</span></span>',
             '<span style="background-color: rgba(31,41,55,.3);border-radius: 9999px;" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"><svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"></path></svg><span class="sr-only">Next</span></span>'
         ],
-    }).on('changed.owl.carousel', syncPosition);
-    
-    sync3.owlCarousel({
-        items: 1,
-        slideSpeed: 1000,
-        nav: true,
         autoplay: true,
-        dots: true,
+        autoplayHoverPause: true,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+    })
+
+    $('#sync2').owlCarousel({
         loop: true,
-        navText: '',
-        responsiveRefreshRate: 200,
-    }).on('changed.owl.carousel', syncPosition3);
-
-    sync2
-        .on('initialized.owl.carousel', function () {
-        sync2.find(".owl-item").eq(0).addClass("current");
-        })
-        .owlCarousel({
-        items : slidesPerPage,
-        dots: true,
         nav: true,
-        smartSpeed: 200,
-        slideSpeed : 500,
-        slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-        responsiveRefreshRate : 100
-    }).on('changed.owl.carousel', syncPosition2);
-
-    sync4
-        .on('initialized.owl.carousel', function () {
-        sync4.find(".owl-item").eq(0).addClass("current");
-        })
-        .owlCarousel({
-        items : slidesPerPage,
-        dots: true,
-        nav: true,
-        smartSpeed: 200,
-        slideSpeed : 500,
-        slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-        responsiveRefreshRate : 100
-    }).on('changed.owl.carousel', syncPosition4);
-    
-    function syncPosition(el) {
-        var count = el.item.count-1;
-        var current = Math.round(el.item.index - (el.item.count/2) - .5);
-        
-        if(current < 0) {
-        current = count;
+        navText: [  ],
+        autoplay: true,
+        autoplayHoverPause: true,
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
         }
-        if(current > count) {
-        current = 0;
-        }
-    
-        sync2
-        .find(".owl-item")
-        .removeClass("current")
-        .eq(current)
-        .addClass("current");
-        var onscreen = sync2.find('.owl-item.active').length - 1;
-        var start = sync2.find('.owl-item.active').first().index();
-        var end = sync2.find('.owl-item.active').last().index();
-        
-        if (current > end) {
-        sync2.data('owl.carousel').to(current, 100, true);
-        }
-        if (current < start) {
-        sync2.data('owl.carousel').to(current - onscreen, 100, true);
-        }
-    }
-
-    function syncPosition3(el) {
-        var count = el.item.count-1;
-        var current = Math.round(el.item.index - (el.item.count/2) - .5);
-        
-        if(current < 0) {
-        current = count;
-        }
-        if(current > count) {
-        current = 0;
-        }
-        
-        //end block
-    
-        sync4
-        .find(".owl-item")
-        .removeClass("current")
-        .eq(current)
-        .addClass("current");
-        var onscreen = sync4.find('.owl-item.active').length - 1;
-        var start = sync4.find('.owl-item.active').first().index();
-        var end = sync4.find('.owl-item.active').last().index();
-        
-        if (current > end) {
-        sync4.data('owl.carousel').to(current, 100, true);
-        }
-        if (current < start) {
-        sync4.data('owl.carousel').to(current - onscreen, 100, true);
-        }
-    }
-    
-    function syncPosition2(el) {
-        if(syncedSecondary) {
-        var number = el.item.index;
-        sync1.data('owl.carousel').to(number, 100, true);
-        }
-    }
-
-    function syncPosition4(el) {
-        if(syncedSecondary) {
-        var number = el.item.index;
-        sync3.data('owl.carousel').to(number, 100, true);
-        }
-    }    
+    })
 }(jQuery));
