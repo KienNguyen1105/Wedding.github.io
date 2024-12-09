@@ -15,8 +15,6 @@
     const ctx = canvas.getContext('2d');
     const bntnmute =document.getElementById('bntnmute');
     const bntmute =document.getElementById('bntmute');
-    const btnLoichuc = document.getElementById('btnloichuc');
-    btnLoichuc.disabled = true;
     // Set the canvas dimensions
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -57,6 +55,8 @@
             const loichuc = document.getElementById('loichuc');
             loichuc.classList.remove('deactive');
             loichuc.classList.add('active');
+            const btnSendMsg = document.getElementById('btnSendMsg');
+            btnSendMsg.disabled = true;
         });
     }
 
